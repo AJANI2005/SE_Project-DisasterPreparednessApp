@@ -1,0 +1,56 @@
+.item-icon {
+    font-size: 32px;
+}
+
+.list-container {
+    width: fit-content;
+}
+
+
+.list-group {
+    display: flex;
+    width: fit-content;
+    padding: 10px;
+    padding: 10px;
+}
+
+.list-group-item {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+}
+
+.list-group-item>.container {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    justify-content: left;
+    align-items: center;
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #333;
+    color: #fff;
+    border: 3px solid #555;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: min-content;
+    min-width: 400px;
+    padding: 15px;
+}
+
+.list-check-input {
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.list-group li:nth-child(even) {
+    border-radius: 10px;
+}
+
+.list-group li:nth-child(odd) {
+
+    border-radius: 10px;
+}
