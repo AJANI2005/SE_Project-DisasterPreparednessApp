@@ -1,0 +1,27 @@
+
+[
+{   
+    "properties": { 
+        "name": "Carters Warehouse", 
+        "description": "Hardware and building supplies for disaster preparation", 
+        "id": "1", 
+        "parish": "St. George" 
+    },
+    "geometry": {   
+        "coordinates": [-59.579864912324254,13.137273202982252, 0.0] 
+    } 
+},
+
+{   
+    "properties": { 
+        "name": "Marshall Trading Ltd.", 
+        "description": "Hardware store with emergency supplies and tools", 
+        "id": "2", 
+        "parish": "St. Michael" 
+    },
+    "geometry": {   
+        "coordinates": [ -59.600558301162195,13.154347541916465,0.0] 
+    } 
+}
+
+]
