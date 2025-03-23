@@ -21,6 +21,18 @@ a {
     text-decoration: none;
 }
 
+header h2 {
+    margin-bottom: 2px;
+    font-weight: 600;
+    transform: scaleY(1.1);
+}
+
+header h3 {
+    margin-top: 2px;
+    font-weight: normal;
+    color: #333;
+}
+
 .sidebar {
     background-color: var(--base-color-dark);
 
@@ -32,6 +44,7 @@ a {
     height: 100%;
     color: #fff;
 
+    box-shadow: 5px 0px 2px #60768D66;
 }
 
 .sidebar-list-group {

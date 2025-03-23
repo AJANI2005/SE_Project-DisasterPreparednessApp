@@ -4,12 +4,17 @@ import "./styles/list.css"
 
 export const CreateList = () => {
     return (<>
+
+        <header>
+            <h2>Create List</h2>
+            <h3>Select a template to start preparing</h3>
+        </header>
         {/*Create using template card*/}
-        <div>
+        <div className="template-card">
             <input type="text" />
         </div>
         {/*Create custom list form*/}
-        <form>
+        <form className="list-form">
             <input type="text" />
         </form>
     </>)
