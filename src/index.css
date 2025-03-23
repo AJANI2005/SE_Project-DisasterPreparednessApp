@@ -1,0 +1,26 @@
+:root {
+    font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /*Project Colors*/
+    --base-color: #ABD2FA;
+    --base-color-dark: #091540;
+    --primary-color: #7692FF;
+    --secondary-color: #3D518C
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 15px 35px 15px 35px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+button:hover {
+    cursor: pointer;
+}
