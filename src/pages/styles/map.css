@@ -1,13 +1,63 @@
+.map-wrapper {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    width: 100%;
+}
+
 .map-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    width: 80%;
 }
 
 .leaflet-container {
+    display: inline-block;
     border-radius: 15px;
 }
 
-.leaflet-container:hover {
-    border: none;
+
+.shelter-info {
+    width: 75%;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shelter-name {
+    font-size: 1.6rem;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.shelter-description {
+    font-size: 1.2rem;
+    color: #555;
+    margin-left: 4px;
+    margin-bottom: 20px;
+}
+
+.shelter-list-group {
+    list-style: none;
+    padding: 0;
+}
+
+.shelter-list-item {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    background: white;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.shelter-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
 }

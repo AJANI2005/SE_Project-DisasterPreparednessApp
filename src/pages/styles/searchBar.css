@@ -1,0 +1,86 @@
+/* Container Styling */
+.search-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+/* Search Bar Styling */
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    background: white;
+    border-radius: 15px;
+    padding: 8px;
+    gap: 8px;
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+}
+
+.search-bar input::placeholder {
+    color: #aaa;
+}
+
+/* Search Icon */
+.search-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+/* Search Results Styling */
+.search-results {
+    position: absolute;
+    top: 100%;
+    width: 65%;
+    max-height: auto;
+    background: white;
+    border-radius: 8px;
+    margin-top: 4px;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    border: 2px solid #E1E1E1;
+}
+
+/* Individual Search Result Item */
+.search-result-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: #f0f0f0;
+}
+
+/* Text inside search result */
+.search-result-item span {
+    color: #333;
+    font-size: 16px;
+}
+
+/* Scrollbar Styling (Optional) */
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: #f8f8f8;
+}

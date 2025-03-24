@@ -4,31 +4,6 @@
     font-size: 1rem;
 }
 
-.search-container {
-    display: flex;
-    justify-content: center;
-}
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    width: 75%;
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 2px #60768D33;
-}
-
-.search-bar input[type="text"] {
-    font-size: 1rem;
-}
-
-.search-icon {
-    width: auto;
-    height: 16px;
-    margin-right: 5px;
-    margin-left: 15px;
-}
 
 
 /* ================================================================= */
@@ -327,7 +302,7 @@ input[type="checkbox"]:checked:after {
 
 .list-overview {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
@@ -336,7 +311,7 @@ input[type="checkbox"]:checked:after {
 
 
 .list-overview .lm {
-    width: 290px;
+    width: 250px;
     height: 280px;
     margin-bottom: 0px;
     border: none;
