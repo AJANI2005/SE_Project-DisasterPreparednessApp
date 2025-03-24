@@ -16,6 +16,7 @@
 .leaflet-container {
     display: inline-block;
     border-radius: 15px;
+    z-index: 0;
 }
 
 
