@@ -33,6 +33,7 @@ ul {
 }
 
 h2 {
+    margin-top: 2px;
     margin-bottom: 2px;
     font-weight: 600;
     transform: scaleY(1.1);
@@ -54,6 +55,10 @@ input {
 
 input:focus {
     outline: none;
+}
+
+.strike-through {
+    text-decoration: line-through;
 }
 
 .icon {

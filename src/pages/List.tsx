@@ -1,11 +1,25 @@
-import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./styles/list.css"
-import templates from "../data/templates.json";
-import { useEffect, useState } from "react";
-import { getAllChecklists, getChecklist, saveChecklist } from "./Storage";
 
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+// React Hooks
+import { useEffect, useState } from "react";
+
+// Storage Helper Functions
+import { getAllChecklists, getChecklist, removeChecklist, saveChecklist } from "./Storage";
+
+import SearchBar from "./SearchBar";
+
+// import template data
+import templates from "../data/templates.json";
 
 export interface Item {
+    id: string;
+    name: string;
+    completed: boolean;
+}
+
+export interface TemplateItem {
+    id?: string;
     name: string;
     completed?: boolean;
 }
@@ -14,6 +28,7 @@ export interface Checklist {
     items: Item[];
     progress: number;
     name: string;
+    description?: string;
     id: string;
     dateCreated: Date;
     update?: (object: Object) => void;
@@ -21,7 +36,7 @@ export interface Checklist {
 
 interface Template {
     name: string;
-    items: Item[];
+    items: TemplateItem[];
 }
 
 export const CreateList = () => {
@@ -47,16 +62,20 @@ export const CreateList = () => {
             let items = template.items;
 
             // add completed field
-            items = items.map((item: Item) => ({
-                name: item.name,
-                completed: false
-            }));
+            items = items.map((item: TemplateItem) => (
+                {
+                    id: crypto.randomUUID(),
+                    name: item.name,
+                    completed: false
+                }
+            ));
 
             // create the template checklist
             const newChecklist: Checklist = {
-                items: items,
+                items: items as Item[],
                 progress: 0,
-                name: template_name + " Preparation Checklist",
+                name: template.name + " Preparation List",
+                description: "Template checklist for a " + template.name + ", Stay Prepared!",
                 id: crypto.randomUUID(),
                 dateCreated: new Date()
             }
@@ -105,11 +124,13 @@ export const CreateList = () => {
         e.preventDefault();
         const data = new FormData(e.currentTarget as HTMLFormElement);
         const name = data.get("name") as string;
+        const description = data.get("description") as string || "";
         if (!name) return;
         const newChecklist: Checklist = {
             items: [],
             progress: 0,
             name: name,
+            description: description,
             id: crypto.randomUUID(),
             dateCreated: new Date()
         }
@@ -144,6 +165,7 @@ export const CreateList = () => {
                             </div>
                         </div>
                         <input name="name" type="text" placeholder="List Name" className="card-list-item card-text" required />
+                        <input name="description" type="text" placeholder="List Description" className="card-list-item card-text" />
                         <div className="card-list-item card-text"
                             style={{ display: "inline-block" }}
                         >
@@ -169,31 +191,9 @@ export const CreateList = () => {
 }
 
 
-const SearchBar = () => {
-    const [searchTerm, setSearchTerm] = useState("");
-
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
-    };
-
-    return (
-        <>
-            <div className="search-container">
-                <div className="search-bar">
-                    <img className="search-icon" src="/icons/search.png" />
-                    <input
-                        onChange={handleSearchChange}
-                        value={searchTerm}
-                        type="text"
-                        placeholder="Search" />
-                </div>
-            </div>
-        </>
-    );
-}
-
 
 export const ViewList = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get("id");
@@ -231,22 +231,30 @@ export const ViewList = () => {
                     <ListManager
                         id={checklist.id}
                         name={checklist.name}
+                        description={checklist.description}
                         dateCreated={checklist.dateCreated}
                         items={checklist.items}
                         progress={checklist.progress}
                         update={(object) => {
-                            const newChecklist = Object.assign({}, checklist, object);
+                            const newChecklist = { ...checklist, ...object };
                             setChecklist(newChecklist);
                         }}
                     />
                 </div>
             </div>
+            <button className="remove-list-btn" onClick={
+                () => {
+                    removeChecklist(checklist.id);
+                    navigate("/list");
+                    alert(checklist.name + " has been removed");
+                }
+            }>Remove Checklist</button>
         </>)
 }
 
 
 
-export const ListManager = ({ id, name, dateCreated, items, progress, update }: Checklist) => {
+export const ListManager = ({ id, name, description, dateCreated, items, progress, update }: Checklist) => {
 
 
     // Save any changes to items
@@ -261,25 +269,25 @@ export const ListManager = ({ id, name, dateCreated, items, progress, update }: 
             }
         }
         // Save data to local storage
-        saveChecklist({ id, name, dateCreated, items, progress });
+        saveChecklist({ id, name, description, dateCreated, items, progress });
     }, [items])
 
     const handleAddItemForm = (e: React.FormEvent) => {
         e.preventDefault();
-        const data = new FormData(e.currentTarget as HTMLFormElement);
+        const form = e.currentTarget as HTMLFormElement;
+        const data = new FormData(form);
         const name = data.get("name") as string;
         if (!name) return;
 
         const newItem: Item = {
+            id: crypto.randomUUID(),
             name: name,
             completed: false,
         }
         const newItems = [...items, newItem];
         if (update) { update({ items: newItems }); }
         // clear the text field
-
-
-
+        form.reset();
     };
 
     return (
@@ -287,7 +295,9 @@ export const ListManager = ({ id, name, dateCreated, items, progress, update }: 
             <div className="lm">
                 <div className="lm-header">
                     <Link to={"/list/view/?id=" + id}>
-                        <img className="lm-icon" src="/icons/folder.png" />
+                        <div className="lm-icon" >
+                            <img src="/icons/folder.png" />
+                        </div>
                     </Link>
                     <div>
                         <h3 className="lm-title">{name}</h3>
@@ -308,12 +318,22 @@ export const ListManager = ({ id, name, dateCreated, items, progress, update }: 
                                     onChange={(e) => {
                                         if (!update) return;
                                         const newItems = items.map(i =>
-                                            i.name === item.name ? { ...i, completed: e.target.checked } : i
+                                            i.id === item.id ? { ...i, completed: e.target.checked } : i
                                         );
                                         update({ items: newItems });
                                     }}
                                 />
-                                <p className="lm-item-text">{item.name}</p>
+                                {
+                                    <p className={"lm-item-text" + String(item.completed ? " strike-through" : "")}>{item.name}</p>
+                                }
+                                <button className="lm-x-btn" onClick={
+                                    () => {
+                                        if (!update) return;
+                                        const newItems = items.filter(i => i.id !== item.id);
+                                        update({ items: newItems });
+                                    }
+
+                                }>X</button>
                             </li>
                         ))
                     }
@@ -351,9 +371,16 @@ const ListOverview = () => {
                             <ListManager
                                 id={checklist.id}
                                 name={checklist.name}
+                                description={checklist.description}
                                 dateCreated={checklist.dateCreated}
                                 items={checklist.items}
                                 progress={checklist.progress}
+                                update={(object) => {
+                                    const newLists = checklists.map(c =>
+                                        c.id === checklist.id ? { ...c, ...object } : c
+                                    );
+                                    setChecklists(newLists);
+                                }}
                             />
                         </div>
                     ))

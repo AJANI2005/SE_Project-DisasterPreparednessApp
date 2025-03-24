@@ -3,12 +3,13 @@ import { Checklist } from "./List";
 import ProgressBar from "./ProgressBar";
 import { getAllChecklists } from "./Storage";
 import "./styles/home.css";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
 
     const [checklists, setChecklists] = useState<Checklist[]>([]);
-
+    const navigate = useNavigate();
     // Attempt to load the checklists from local storage
     useEffect(() => {
         const fetchedLists = getAllChecklists();
@@ -29,10 +30,21 @@ const Home = () => {
                             <li className="progress-card-list-item">
                                 <p className="progress-card-title">{checklist.name}</p>
                             </li>
+                            {/*List info (description)*/}
+                            <li className="progress-card-list-item">
+                                <p className="progress-card-description">{checklist.description}</p>
+                            </li>
+                            <button className="goto-btn" onClick={() => {
+                                navigate("/list/view/?id=" + checklist.id);
+                            }}>GO</button>
                         </ul>
-                        <span>{Math.round(checklist.progress * 100)}%</span>
-                        <span>{checklist.progress != 1 && "Not completed" || "Completed"}</span>
-                        <ProgressBar progress={checklist.progress} color={"blue"} />
+                        <div className="progress-card-progress-container">
+                            <div style={{ marginBottom: "10px" }}>
+                                <span className="progress-card-progress">{Math.round(checklist.progress * 100)}%</span>
+                                <span className="progress-card-progress-text">{checklist.progress != 1 && "Not completed" || "Completed"}</span>
+                            </div>
+                            <ProgressBar progress={checklist.progress} color={"blue"} />
+                        </div>
                     </div>
                 ))
             }

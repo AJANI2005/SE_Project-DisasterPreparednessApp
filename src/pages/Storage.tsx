@@ -1,4 +1,4 @@
-import { CheckList } from "./List";
+import { Checklist } from "./List";
 
 
 export const initStorage = () => {
@@ -10,7 +10,7 @@ export const initStorage = () => {
 }
 
 
-export const saveChecklist = (checklist: CheckList) => {
+export const saveChecklist = (checklist: Checklist) => {
     // Save the checklist data to a remote API or local storage
     const storage = localStorage;
     const checklists = storage.getItem("checklists");
@@ -19,7 +19,7 @@ export const saveChecklist = (checklist: CheckList) => {
         checklistData = JSON.parse(checklists);
     }
     // Check if list already exists
-    const existingList = checklistData.find((list: CheckList) => list.id === checklist.id);
+    const existingList = checklistData.find((list: Checklist) => list.id === checklist.id);
     if (existingList) {
         // Update the existing list
         const index = checklistData.indexOf(existingList);
@@ -32,13 +32,29 @@ export const saveChecklist = (checklist: CheckList) => {
 }
 
 
+export const removeChecklist = (id: string) => {
+    // Remove the checklist from local storage
+    const storage = localStorage;
+    const checklists = storage.getItem("checklists");
+    let checklistData = [];
+    if (checklists) {
+        checklistData = JSON.parse(checklists);
+    }
+    const index = checklistData.findIndex((list: Checklist) => list.id === id);
+    if (index > -1) {
+        checklistData.splice(index, 1);
+    }
+    storage.setItem("checklists", JSON.stringify(checklistData));
+}
+
+
 export const getChecklist = (id: string) => {
     // Fetch the checklist data from a remote API or local storage
     const storage = localStorage;
     const checklists = storage.getItem("checklists");
     if (checklists) {
         const checklistData = JSON.parse(checklists);
-        return checklistData.find((checklist: CheckList) => checklist.id === id);
+        return checklistData.find((checklist: Checklist) => checklist.id === id);
     } else {
         return undefined;
     }

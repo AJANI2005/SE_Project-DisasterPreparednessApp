@@ -85,6 +85,13 @@
     text-align: center;
 }
 
+
+.remove-list-btn {
+    background-color: #C10000;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
 .list-form .card-list-group {
     display: flex;
     flex-direction: column;
@@ -175,12 +182,17 @@ input[type="file"] {
     border: solid 2px #333;
     border-radius: 10px;
     box-shadow: 0px 5px 2px #60768D33;
-    padding: 40px;
+    padding: 50px;
 }
 
 .lm-icon {
-    margin-right: 30px;
+    padding: 5px;
+    border-radius: 15px;
+    margin-right: 10px;
+    margin-left: -10px;
+    border: solid 2px #E5E5E5;
 }
+
 
 .lm-header {
     display: grid;
@@ -209,15 +221,70 @@ input[type="file"] {
 
 .lm-list-group-item {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
     border: none;
     border-radius: 5px;
 }
 
-.lm-form-check-input {
-    width: 24px;
-    height: auto;
+
+.lm-list-group-item:hover {
+    background-color: #f8f8f8;
+}
+
+.item-form .lm-list-group-item:hover {
+    background-color: transparent;
+}
+
+
+.lm-list-group-item:hover .lm-x-btn {
+    visibility: visible;
+    opacity: 1;
+}
+
+.lm-x-btn {
+    visibility: hidden;
+    opacity: 0.5;
+    background-color: transparent;
+    width: fit-content;
+    color: #333;
     margin-right: 15px;
+    padding: 5px;
+    font-size: 1rem;
+    transition: opacity 1s ease;
+}
+
+
+input[type="checkbox"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+    appearance: none;
+    background-color: #fff;
+    border: solid 2px #888;
+    margin-right: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+input[type="checkbox"]:hover {
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #444;
+    border: solid 2px #333;
+    color: #fff;
+}
+
+input[type="checkbox"]:checked:after {
+    margin-top: 2px;
+    margin-left: 2px;
+    content: "✓";
 }
 
 .item-form {
@@ -243,7 +310,16 @@ input[type="file"] {
     background-color: var(--secondary-color);
 }
 
+/* Hide the scrollbar by default */
+.lm-list-group::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
 
+/* When scrolling, show the scrollbar */
+.lm-list-group:hover::-webkit-scrollbar {
+    width: 8px;
+}
 
 /* ----------------------------------------------------------------*/
 
@@ -269,16 +345,4 @@ input[type="file"] {
 .list-overview .lm-icon {
     width: 24px;
     height: 24px;
-}
-
-/* Hide the scrollbar by default */
-.list-overview .lm-list-group::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-}
-
-/* When scrolling, show the scrollbar */
-.list-overview .lm-list-group:hover::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
 }

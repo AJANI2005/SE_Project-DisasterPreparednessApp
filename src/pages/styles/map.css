@@ -1,0 +1,13 @@
+.map-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.leaflet-container {
+    border-radius: 15px;
+}
+
+.leaflet-container:hover {
+    border: none;
+}

@@ -1,4 +1,16 @@
+.goto-btn {
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    padding: 10px;
+    height: fit-content;
+    float: right;
+    margin: 10px;
+
+}
+
 .progress-card {
+    display: flex;
+    flex-wrap: wrap;
     background-color: #fff;
     width: 80%;
     height: 60%;
@@ -11,11 +23,42 @@
     padding: 20px;
 }
 
+.progress-card-list-group {
+    width: 100%;
+}
+
 .progress-card-title {
-    font-weight: bold;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 0px;
 
 }
+
+.progress-card-description {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.progress-card-progress {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.progress-card-progress-text {
+    font-size: 0.85rem;
+    color: #333;
+}
+
+.progress-card-progress-container {
+    display: flex;
+    width: 100%;
+    margin-top: auto;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
 
 .progress-card-container {
     display: flex;
