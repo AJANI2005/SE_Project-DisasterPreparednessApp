@@ -1,0 +1,27 @@
+.progress-card {
+    background-color: #fff;
+    width: 80%;
+    height: 60%;
+    width: 280px;
+    height: 250px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 5px 2px #60768D33;
+    padding: 20px;
+}
+
+.progress-card-title {
+    font-weight: bold;
+    font-size: 1rem;
+
+}
+
+.progress-card-container {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 50px;
+}

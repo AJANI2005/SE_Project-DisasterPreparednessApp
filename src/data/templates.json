@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Hurricane",
+    "items": [
+      { "name": "Non-perishable food (3-day supply)" },
+      { "name": "Bottled water (1 gallon per person per day)" },
+      { "name": "Flashlights with extra batteries" },
+      { "name": "Battery-powered or hand-crank radio" },
+      { "name": "First aid kit" },
+      { "name": "Personal hygiene items" },
+      { "name": "Cash (small bills)" },
+      { "name": "Important documents in waterproof container" },
+      { "name": "Emergency phone numbers" },
+      { "name": "Portable phone charger" },
+      { "name": "Blankets and extra clothing" },
+      { "name": "Whistle to signal for help" },
+      { "name": "Duct tape and plastic sheeting (for shelter)" },
+      { "name": "Medications (7-day supply)" }
+    ]
+  },
+  {
+    "name": "Earthquake",
+    "items": [
+      { "name": "Emergency food and water supply (3 days)" },
+      { "name": "Flashlight and extra batteries" },
+      { "name": "First aid kit" },
+      { "name": "Whistle to signal for help" },
+      { "name": "Dust masks (to filter debris)" },
+      { "name": "Sturdy shoes and protective gloves" },
+      { "name": "Portable phone charger" },
+      { "name": "Medications and prescriptions" },
+      { "name": "Cash (ATMs may not work)" },
+      { "name": "Fire extinguisher" },
+      { "name": "Heavy-duty plastic bags (for waste disposal)" },
+      { "name": "Emergency contact list" },
+      { "name": "Multi-tool or Swiss Army knife" },
+      { "name": "Battery-powered radio" },
+      { "name": "Extra glasses or contacts" }
+    ]
+  },
+  {
+    "name": "Volcano",
+    "items": [
+      { "name": "N95 or dust masks (to protect from ash)" },
+      { "name": "Goggles to protect eyes from ash" },
+      { "name": "Non-perishable food and bottled water (3-day supply)" },
+      { "name": "Battery-powered or hand-crank radio" },
+      { "name": "Flashlight with extra batteries" },
+      { "name": "First aid kit" },
+      { "name": "Portable phone charger" },
+      { "name": "Sturdy shoes and long-sleeved clothing" },
+      { "name": "Plastic bags for ash cleanup" },
+      { "name": "Wet cloths to cover nose and mouth" },
+      { "name": "Emergency contact list" },
+      { "name": "Important documents in a waterproof container" },
+      { "name": "Fire extinguisher" },
+      { "name": "Evacuation map and emergency plan" }
+    ]
+  }
+]
+

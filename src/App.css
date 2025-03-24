@@ -4,7 +4,6 @@
 
 html,
 body {
-    height: 100%;
     margin: 0;
     padding: 0;
     background-color: var(--base-color);
@@ -21,17 +20,49 @@ a {
     text-decoration: none;
 }
 
-header h2 {
+a:hover {
+    cursor: pointer;
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    padding: 0px;
+}
+
+h2 {
     margin-bottom: 2px;
     font-weight: 600;
     transform: scaleY(1.1);
 }
 
-header h3 {
+h3 {
     margin-top: 2px;
     font-weight: normal;
     color: #333;
 }
+
+input {
+    font-size: 14px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.icon {
+    width: auto;
+    height: 30px;
+    margin-right: 15px;
+    filter: invert(1) grayscale(100%);
+}
+
 
 .sidebar {
     background-color: var(--base-color-dark);
@@ -45,24 +76,25 @@ header h3 {
     color: #fff;
 
     box-shadow: 5px 0px 2px #60768D66;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.sidebar-logo {
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+    text-align: left;
 }
 
 .sidebar-list-group {
     display: flex;
     flex-direction: column;
-    padding: 10px;
 }
 
-.sidebar-icon {
-    width: auto;
-    height: 30px;
-    margin-right: 15px;
-    filter: invert(1) grayscale(100%);
-}
 
 .sidebar-list-item {
     display: flex;
-    list-style: none;
     padding: 15px;
     margin-bottom: 20px;
     font-weight: 600;
@@ -81,5 +113,5 @@ header h3 {
 .sidebar-separator {
     display: inline-block;
     border-color: #82839A;
-    width: calc(var(--sidebar-width) * 0.75);
+    width: calc(var(--sidebar-width) * 0.8);
 }

@@ -1,7 +1,7 @@
 /* /list */
 .add-button {
-    margin-top: 40px;
-    font-size: 1rem;
+    margin-top: 60px;
+    font-weight: 500;
 }
 
 .search-container {
@@ -14,13 +14,8 @@
     align-items: center;
     background-color: #fff;
     width: 75%;
-    padding: 5px;
     border-radius: 10px;
     box-shadow: 0px 5px 2px #60768D33;
-}
-
-.search-bar input[type="text"] {
-    font-size: 1rem;
 }
 
 .search-icon {
@@ -33,7 +28,6 @@
 
 /* ================================================================= */
 /* /list/create */
-
 .card {
     display: flex;
     flex-direction: row;
@@ -70,14 +64,12 @@
 .card-list-item {
     display: grid;
     grid-template-columns: 0.4fr 1fr;
-    width: 100%;
     padding: 15px;
     border: none;
     border-radius: 5px;
     background-color: #E5E5E5;
     margin-bottom: 30px;
 }
-
 
 .card-button {
     margin-top: 50px;
@@ -139,6 +131,7 @@ input[type="file"] {
     margin-left: -20px;
 }
 
+.list-form-input-date {}
 
 .back-button {
     position: absolute;
@@ -157,7 +150,7 @@ input[type="file"] {
 .list-wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .list-container {
@@ -169,10 +162,9 @@ input[type="file"] {
 /* List Manager */
 .lm {
     background-color: #fff;
-    width: 80%;
+    width: 100%;
     height: 60%;
     margin-bottom: 20px;
-    border: solid 2px #333;
     border-radius: 10px;
     box-shadow: 0px 5px 2px #60768D33;
     padding: 40px;
@@ -190,7 +182,6 @@ input[type="file"] {
 
 .lm-title {
     margin: 0;
-    font-size: 16px;
 }
 
 .lm-date {
@@ -220,19 +211,6 @@ input[type="file"] {
     margin-right: 15px;
 }
 
-.item-form {
-    width: 90%;
-}
-
-.item-form-input-text {
-    font-size: 1rem;
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-}
-
-
 /* Style for the scrollbar */
 .lm-list-group::-webkit-scrollbar-thumb {
     background-color: var(--primary-color);
@@ -251,24 +229,22 @@ input[type="file"] {
 
 .list-overview {
     display: flex;
-    justify-content: left;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 10px;
-    margin: 10px;
+    margin-top: 50px;
 }
 
 
 .list-overview .lm {
-    width: 290px;
-    height: 280px;
-    margin-bottom: 0px;
-    border: none;
+    width: 265px;
+    height: 270px;
+    margin-bottom: 20px;
 }
 
 .list-overview .lm-icon {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
 }
 
 /* Hide the scrollbar by default */
