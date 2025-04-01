@@ -165,7 +165,6 @@ input[type="file"] {
     border-radius: 15px;
     margin-right: 10px;
     margin-left: -10px;
-    border: solid 2px #E5E5E5;
 }
 
 
@@ -315,6 +314,11 @@ input[type="checkbox"]:checked:after {
     height: 280px;
     margin-bottom: 0px;
     border: none;
+}
+
+.list-overview .lm-item-text {
+    width: 80%;
+    overflow: hidden;
 }
 
 .list-overview .lm-icon {

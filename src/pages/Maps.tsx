@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import L, { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import './styles/map.css'
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 //import data files
@@ -112,6 +112,11 @@ const MapComponent = ({ selectShelter }: Props) => {
 
 const Maps = () => {
     const [selectedShelter, setSelectedShelter] = useState<any>()
+
+    const shelterInfoRef = useRef<any>(null);
+    const scrollToTarget = () => {
+        shelterInfoRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
     return (
         <>
             <h2>Maps</h2>
@@ -120,11 +125,15 @@ const Maps = () => {
 
             <div className="map-wrapper">
                 <MapComponent selectShelter={(shelter: any) => {
+                    //delay the scroll
+                    setTimeout(() => {
+                        scrollToTarget();
+                    }, 100)
                     setSelectedShelter(shelter);
                 }} />
                 {
                     selectedShelter &&
-                    <div className="shelter-info">
+                    <div className="shelter-info" ref={shelterInfoRef}>
                         <h2 className="shelter-name">{selectedShelter.properties.name}</h2>
                         <h3 className="shelter-description">{selectedShelter.properties.description}</h3>
                         <ul className="shelter-list-group">

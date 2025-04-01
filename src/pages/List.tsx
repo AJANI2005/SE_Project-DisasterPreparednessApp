@@ -55,13 +55,13 @@ export const CreateList = () => {
     }
 
     // Creates a new template checklist with a new id and returns the url for it
-    const templateURL = (template_name: string) => {
+    const createNewTemplate = (template_name: string) => {
         //get the items for that check list template
         const template = templates.find((t: Template) => t.name == template_name);
         if (template) {
             let items = template.items;
 
-            // add completed field
+            // add completed field (because templates dont have it yet)
             items = items.map((item: TemplateItem) => (
                 {
                     id: crypto.randomUUID(),
@@ -87,39 +87,6 @@ export const CreateList = () => {
             navigate("/list")
         }
     }
-
-    const templateForm = () => {
-        return (
-            <>
-                {/*Create using template card*/}
-                <div className="card">
-                    <ul className="card-list-group">
-                        <a onClick={() => { templateURL("Hurricane") }}>
-                            <li className="card-list-item">
-                                <img src="/icons/folder.png" className="card-icon icon" alt="Home" />
-                                <span className="card-text">Hurricane Preparation List</span>
-                            </li>
-                        </a>
-                        <a onClick={() => { templateURL("Earthquake") }}>
-                            <li className="card-list-item">
-                                <img src="/icons/folder.png" className="card-icon icon" alt="List" />
-                                <span className="card-text">Earthquake Preparation List</span>
-                            </li>
-                        </a>
-                        <a onClick={() => { templateURL("Volcano") }}>
-                            <li className="card-list-item">
-                                <img src="/icons/folder.png" className="card-icon icon" alt="Maps" />
-                                <span className="card-text">Volcano Preparation List</span>
-                            </li>
-                        </a>
-                        <button className="card-button card-text" onClick={() => { setView(1) }}>Create my own</button>
-                    </ul>
-                </div>
-
-            </>
-        );
-    }
-
     const handleListForm = (e: React.FormEvent) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget as HTMLFormElement);
@@ -138,6 +105,39 @@ export const CreateList = () => {
         // Go to our new list url
         navigate("/list/view/?id=" + newChecklist.id)
     };
+
+    const templateForm = () => {
+        return (
+            <>
+                {/*Create using template card*/}
+                <div className="card">
+                    <ul className="card-list-group">
+                        <a onClick={() => { createNewTemplate("Hurricane") }}>
+                            <li className="card-list-item">
+                                <img src="/icons/folder.png" className="card-icon icon" alt="Home" />
+                                <span className="card-text">Hurricane Preparation List</span>
+                            </li>
+                        </a>
+                        <a onClick={() => { createNewTemplate("Earthquake") }}>
+                            <li className="card-list-item">
+                                <img src="/icons/folder.png" className="card-icon icon" alt="List" />
+                                <span className="card-text">Earthquake Preparation List</span>
+                            </li>
+                        </a>
+                        <a onClick={() => { createNewTemplate("Volcano") }}>
+                            <li className="card-list-item">
+                                <img src="/icons/folder.png" className="card-icon icon" alt="Maps" />
+                                <span className="card-text">Volcano Preparation List</span>
+                            </li>
+                        </a>
+                        <button className="card-button card-text" onClick={() => { setView(1) }}>Create my own</button>
+                    </ul>
+                </div>
+
+            </>
+        );
+    }
+
     const customListForm = () => {
         const getDate = () => new Date().toLocaleString();
         return (

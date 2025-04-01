@@ -13,6 +13,7 @@ main {
     /*Make room for sidebar*/
     margin-left: var(--sidebar-width);
     padding: 20px 50px 20px 50px;
+    z-index: -10;
 }
 
 a {

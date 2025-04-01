@@ -1,6 +1,16 @@
 import { Checklist } from "./List";
 
 
+// Natural Disaster APIS
+
+/*
+    Volcano - "https://volcanoes.usgs.gov/hans-public/api/volcano/getElevatedVolcanoes"
+    Earthquake - "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-03-25" 
+    Hurricane - "https://api.weather.gov/alerts/active?event=Earthquake" 
+*/
+
+
+
 export const initStorage = () => {
     // Initialize local storage 
     const storage = localStorage;

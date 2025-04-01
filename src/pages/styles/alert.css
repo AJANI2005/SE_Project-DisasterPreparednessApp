@@ -1,0 +1,28 @@
+.alert-card {
+    display: flex;
+    align-items: top;
+    max-width: 80%;
+    background-color: #fff;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.alert-text {
+    margin-top: 2px;
+}
+
+.alert-heading {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+.alert-icon {
+    width: 32px;
+    height: 32px;
+    padding: 10px;
+    margin-right: 10px;
+}
