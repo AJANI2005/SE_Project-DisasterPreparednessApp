@@ -5,8 +5,13 @@
     height: fit-content;
     float: right;
     margin: 10px;
-
 }
+
+.goto-btn:hover {
+    background-color: navy;
+    color: white;
+    transition: all 0.3s ease-in-out;
+}u
 
 .progress-card {
     display: flex;
