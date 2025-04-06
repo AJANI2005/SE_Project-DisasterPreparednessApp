@@ -70,6 +70,13 @@ input:focus {
     filter: invert(1) grayscale(100%);
 }
 
+.img-icon {
+    background-color: #333;
+    width: 32px;
+    height: 32px;
+
+}
+
 
 .sidebar {
     background-color: var(--base-color-dark);

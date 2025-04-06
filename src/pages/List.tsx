@@ -1,16 +1,19 @@
 import "./styles/list.css"
 
-import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // React Hooks
 import { useEffect, useState } from "react";
 
 // Storage Helper Functions
-import { getAllChecklists, getChecklist, removeChecklist, saveChecklist } from "./Storage";
+import { getAllChecklists, getChecklist, getIcon, removeChecklist, saveChecklist, saveIcon } from "./Storage";
 
 import SearchBar from "./SearchBar";
 
 // import template data
 import templates from "../data/templates.json";
+
+
+
 
 export interface Item {
     id: string;
@@ -24,14 +27,21 @@ export interface TemplateItem {
     completed?: boolean;
 }
 
+export interface Icon {
+    id: string;
+    data: string;
+}
+
 export interface Checklist {
+    icon_id?: string;
     items: Item[];
     progress: number;
     name: string;
     description?: string;
     id: string;
     dateCreated: Date;
-    update?: (object: Object) => void;
+
+
 }
 
 interface Template {
@@ -46,13 +56,20 @@ export const CreateList = () => {
     // State
     const [image, setImage] = useState<undefined | string>(undefined); // State to hold the selected image URL
     const [view, setView] = useState(0); //]
+
+    // Saves the image as base 64 
     const handleImageChange = (e: any) => {
-        const file = e.target.files[0]; // Get the selected file
+        const file = e.target.files?.[0];
         if (file) {
-            const imageUrl = URL.createObjectURL(file); // Create a preview URL
-            setImage(imageUrl); // Update state with the image URL
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result as string;
+                setImage(base64String);
+            };
+            reader.readAsDataURL(file); // Converts to base64
         }
     }
+    const [chosenTemplate, setChosenTemplate] = useState<Checklist>();
 
     // Creates a new template checklist with a new id and returns the url for it
     const createNewTemplate = (template_name: string) => {
@@ -67,21 +84,23 @@ export const CreateList = () => {
                     id: crypto.randomUUID(),
                     name: item.name,
                     completed: false
-                }
+                } as Item
             ));
 
-            // create the template checklist
-            const newChecklist: Checklist = {
+            // Update state with the template items
+
+            // Note this is not a real checklist
+            setChosenTemplate({
                 items: items as Item[],
                 progress: 0,
-                name: template.name + " Preparation List",
-                description: "Template checklist for a " + template.name + ", Stay Prepared!",
-                id: crypto.randomUUID(),
-                dateCreated: new Date()
-            }
-            saveChecklist(newChecklist);
-            // Go to our new list url
-            navigate("/list/view/?id=" + newChecklist.id)
+                name: template_name + " Preparation Checklist",
+                description: "",
+                id: "dummy",
+                dateCreated: new Date(),
+            });
+
+            // Go to list creation form
+            setView(1);
         } else {
             // TODO : Have this redirect to an internal server error page (500)
             navigate("/list")
@@ -93,13 +112,26 @@ export const CreateList = () => {
         const name = data.get("name") as string;
         const description = data.get("description") as string || "";
         if (!name) return;
-        const newChecklist: Checklist = {
-            items: [],
+
+        const items = chosenTemplate?.items || [];
+
+        let icon;
+        if (image) {
+            icon = {
+                id: crypto.randomUUID(),
+                data: image
+            };
+            saveIcon(icon, () => { })
+        }
+        let newChecklist: Checklist = {
+            icon_id: icon?.id,
+            items: items,
             progress: 0,
             name: name,
             description: description,
             id: crypto.randomUUID(),
-            dateCreated: new Date()
+            dateCreated: new Date(),
+
         }
         saveChecklist(newChecklist);
         // Go to our new list url
@@ -110,7 +142,7 @@ export const CreateList = () => {
         return (
             <>
                 {/*Create using template card*/}
-                <div className="card">
+                <div className="card template">
                     <ul className="card-list-group">
                         <a onClick={() => { createNewTemplate("Hurricane") }}>
                             <li className="card-list-item">
@@ -138,16 +170,22 @@ export const CreateList = () => {
         );
     }
 
-    const customListForm = () => {
+    const createListForm = () => {
         const getDate = () => new Date().toLocaleString();
         return (
             <>
                 {/*Create custom list form*/}
-                <button className="back-button" onClick={() => { setView(0) }}>
+                <button className="back-button" onClick={() => {
+                    setChosenTemplate(undefined);
+                    setView(0)
+                }}>
                     <img src="/icons/chevron-left.png" />
                 </button>
                 <form id="list-form" className="card list-form" onSubmit={(e) => { handleListForm(e) }}>
                     <ul className="card-list-group">
+                        <div style={{ textAlign: "center" }}>
+                            {chosenTemplate?.items.length != 0 && <h2 className="template-title">{chosenTemplate?.name}</h2>}
+                        </div>
                         <div className="list-form-icon-wrapper">
                             <div className="list-form-icon-container">
                                 {image && <img className="list-form-icon" alt="" src={image} />}
@@ -184,9 +222,11 @@ export const CreateList = () => {
         <header>
             <h2>Create List</h2>
             <h3>Select a template to start preparing</h3>
+
         </header>
+
         {view == 0 && templateForm()}
-        {view == 1 && customListForm()}
+        {view == 1 && createListForm()}
     </>)
 }
 
@@ -229,18 +269,10 @@ export const ViewList = () => {
             <SearchBar />
             <div className="list-wrapper">
                 <div className="list-container">
-                    <ListManager
-                        id={checklist.id}
-                        name={checklist.name}
-                        description={checklist.description}
-                        dateCreated={checklist.dateCreated}
-                        items={checklist.items}
-                        progress={checklist.progress}
-                        update={(object) => {
-                            const newChecklist = { ...checklist, ...object };
-                            setChecklist(newChecklist);
-                        }}
-                    />
+                    <ListManager checklist={checklist} updateChecklist={(props) => {
+                        const newChecklist = { ...checklist, ...props };
+                        setChecklist(newChecklist);
+                    }} />
                 </div>
             </div>
             <button className="remove-list-btn" onClick={
@@ -254,24 +286,39 @@ export const ViewList = () => {
 }
 
 
+interface ListManagerProps {
+    checklist: Checklist;
+    updateChecklist: (props: { [key: string]: any }) => void;
+}
+export const ListManager = ({ checklist, updateChecklist }: ListManagerProps) => {
 
-export const ListManager = ({ id, name, description, dateCreated, items, progress, update }: Checklist) => {
+    const [icon_data, setIconData] = useState<any>();
 
+    //attempt to get icon
+    useEffect(() => {
+        if (checklist.icon_id) {
+            getIcon(checklist.icon_id, (error, icon) => {
+                if (!error) {
+                    setIconData(icon?.data);
+                }
+            });
+        }
+    }, []);
 
     // Save any changes to items
     useEffect(() => {
 
         // Update progress 
-        if (items.length > 0) {
-            const completedItems = items.filter(item => item.completed).length;
-            progress = completedItems / items.length;
-            if (update) {
-                update({ progress });
-            }
+        if (checklist.items.length > 0) {
+            const completedItems = checklist.items.filter(item => item.completed).length;
+            const progress = completedItems / checklist.items.length;
+            updateChecklist({ progress });
         }
         // Save data to local storage
-        saveChecklist({ id, name, description, dateCreated, items, progress });
-    }, [items])
+        saveChecklist(checklist);
+
+    }, [checklist.items]) // run when items state changes
+
 
     const handleAddItemForm = (e: React.FormEvent) => {
         e.preventDefault();
@@ -285,43 +332,48 @@ export const ListManager = ({ id, name, description, dateCreated, items, progres
             name: name,
             completed: false,
         }
-        const newItems = [...items, newItem];
-        if (update) { update({ items: newItems }); }
+        const newItems = [...checklist.items, newItem];
+        updateChecklist({ items: newItems });
         // clear the text field
         form.reset();
     };
 
     return (
         <>
+
             <div className="lm">
-                <div className="lm-header">
-                    <Link to={"/list/view/?id=" + id}>
-                        <div className="lm-icon" >
-                            <img src="/icons/folder.png" />
-                        </div>
-                    </Link>
-                    <div>
-                        <h3 className="lm-title">{name}</h3>
-                        <span className="lm-date">{dateCreated.toLocaleString()}</span>
+                <div className="lm-header-wrapper">
+                    <div className="lm-header-icon">
+                        {icon_data && <img src={icon_data} className="img-icon" />}
                     </div>
-                    <span className="lm-progress-text">{progress * items.length} of {items.length}</span>
+                    <div className="lm-header">
+                        <Link to={"/list/view/?id=" + checklist.id}>
+                            <div className="lm-icon" >
+                                <img src="/icons/folder.png" />
+                            </div>
+                        </Link>
+                        <div>
+                            <h3 className="lm-title">{checklist.name}</h3>
+                            <span className="lm-date">{checklist.dateCreated.toLocaleString()}</span>
+                        </div>
+                        <span className="lm-progress-text">{checklist.progress * checklist.items.length} of {checklist.items.length}</span>
+                    </div>
                 </div>
 
                 <ul className="lm-list-group">
                     {
 
-                        items.map((item, index) => (
+                        checklist.items.map((item, index) => (
                             <li key={index} className="lm-list-group-item">
                                 <input
                                     type="checkbox"
                                     className="lm-form-check-input"
                                     checked={item.completed}
                                     onChange={(e) => {
-                                        if (!update) return;
-                                        const newItems = items.map(i =>
+                                        const newItems = checklist.items.map(i =>
                                             i.id === item.id ? { ...i, completed: e.target.checked } : i
                                         );
-                                        update({ items: newItems });
+                                        updateChecklist({ items: newItems });
                                     }}
                                 />
                                 {
@@ -329,9 +381,9 @@ export const ListManager = ({ id, name, description, dateCreated, items, progres
                                 }
                                 <button className="lm-x-btn" onClick={
                                     () => {
-                                        if (!update) return;
-                                        const newItems = items.filter(i => i.id !== item.id);
-                                        update({ items: newItems });
+                                        if (!updateChecklist) return;
+                                        const newItems = checklist.items.filter(i => i.id !== item.id);
+                                        updateChecklist({ items: newItems });
                                     }
 
                                 }>X</button>
@@ -358,10 +410,7 @@ const ListOverview = () => {
         if (fetchedLists) {
             setChecklists(fetchedLists);
         }
-    }, []);
-
-
-
+    }, []); // reload the checklists when a list is modified
 
     return (
         <>
@@ -369,20 +418,13 @@ const ListOverview = () => {
                 {
                     checklists.map((checklist: Checklist) => (
                         <div key={checklist.id} className="lm-container">
-                            <ListManager
-                                id={checklist.id}
-                                name={checklist.name}
-                                description={checklist.description}
-                                dateCreated={checklist.dateCreated}
-                                items={checklist.items}
-                                progress={checklist.progress}
-                                update={(object) => {
+                            <ListManager checklist={checklist} updateChecklist={
+                                (props) => {
                                     const newLists = checklists.map(c =>
-                                        c.id === checklist.id ? { ...c, ...object } : c
+                                        c.id === checklist.id ? { ...c, ...props } : c
                                     );
                                     setChecklists(newLists);
-                                }}
-                            />
+                                }} />
                         </div>
                     ))
                 }

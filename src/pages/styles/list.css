@@ -6,8 +6,7 @@
 
 .add-button:hover {
     transition: all 0.3s ease;
-    background-color: #D9EBFD;
-    color: #333;
+    background-color: var(--primary-color);
 }
 
 
@@ -44,7 +43,7 @@
     margin-bottom: 20px;
     border-radius: 10px;
     box-shadow: 0px 5px 2px #60768D33;
-    padding: 80px;
+    padding: 60px;
     text-align: center;
 }
 
@@ -59,12 +58,21 @@
     margin-bottom: 30px;
 }
 
-.card-list-item:hover {
-    background-color: #000138;
+.template .card-list-item:hover {
+    background-color: var(--primary-color);
     color: white;
     transition: all 0.3s ease;
 }
 
+.template .card-list-item:hover img {
+    filter: invert();
+}
+
+.template-title {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
 
 .card-button {
     margin-top: 50px;
@@ -74,8 +82,7 @@
 
 .card-button:hover {
     transition: all 0.3s ease;
-    background-color: #D9EBFD;
-    color: #333;
+    background-color: var(--primary-color);
 }
 
 
@@ -150,8 +157,7 @@ input[type="file"] {
 
 .back-button:hover {
     transition: all 0.3s ease;
-    background-color: #014283;
-    color: #333;
+    background-color: var(--primary-color);
 }
 
 
@@ -180,7 +186,7 @@ input[type="file"] {
     border: solid 2px #333;
     border-radius: 10px;
     box-shadow: 0px 5px 2px #60768D33;
-    padding: 50px;
+    padding: 30px;
 }
 
 .lm-icon {
@@ -190,10 +196,24 @@ input[type="file"] {
     margin-left: -10px;
 }
 
+.lm .img-icon {
+    border-radius: 15px;
+    margin-right: 20px;
+    margin-left: 0px;
+    width: 64px;
+    height: 64px;
+}
+
+.lm-header-wrapper {
+    display: flex;
+    align-items: top;
+    padding: 10px;
+}
 
 .lm-header {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    width: 100%;
+    grid-template-columns: auto 2fr auto;
     align-items: top;
 }
 
@@ -331,10 +351,13 @@ input[type="checkbox"]:checked:after {
     margin: 10px;
 }
 
+.list-overview .img-icon {
+    display: none;
+}
 
 .list-overview .lm {
-    width: 250px;
-    height: 280px;
+    width: 350px;
+    height: 350px;
     margin-bottom: 0px;
     border: none;
 }

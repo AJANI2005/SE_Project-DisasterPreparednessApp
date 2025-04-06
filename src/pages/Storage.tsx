@@ -1,4 +1,5 @@
-import { Checklist } from "./List";
+import { get, set } from "idb-keyval";
+import { Checklist, Icon } from "./List";
 
 
 // Natural Disaster APIS
@@ -8,7 +9,6 @@ import { Checklist } from "./List";
     Earthquake - "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-03-25" 
     Hurricane - "https://api.weather.gov/alerts/active?event=Earthquake" 
 */
-
 
 
 export const initStorage = () => {
@@ -82,3 +82,27 @@ export const getAllChecklists = () => {
     }
 }
 
+
+export const saveIcon = (icon: Icon, callback: (error: Error | null) => void) => {
+    set(`icon-${icon.id}`, icon)
+        .then(() => {
+            callback(null);  // If successful, pass null to indicate no error
+        })
+        .catch((error) => {
+            callback(error);  // Pass the error if something goes wrong
+        });
+};
+
+export const getIcon = (id: string, callback: (error: Error | null, icon: Icon | null) => void) => {
+    get(`icon-${id}`)
+        .then((icon) => {
+            if (icon) {
+                callback(null, icon);  // Return the icon if found
+            } else {
+                callback(null, null);  // No icon found, return null
+            }
+        })
+        .catch((error) => {
+            callback(error, null);  // Return error if something goes wrong
+        });
+};

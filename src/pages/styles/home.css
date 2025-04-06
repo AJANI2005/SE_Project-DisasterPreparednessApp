@@ -1,24 +1,30 @@
+.img-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+}
+
 .goto-btn {
     background-color: var(--primary-color);
+    opacity: 0.7;
     border-radius: 15px;
     padding: 10px;
     height: fit-content;
     float: right;
+    font-weight: bold;
     margin: 10px;
 }
 
 .goto-btn:hover {
-    background-color: navy;
+    opacity: 1;
     color: white;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .progress-card {
     display: flex;
     flex-wrap: wrap;
     background-color: #fff;
-    width: 80%;
-    height: 60%;
     width: 280px;
     height: 250px;
     margin-bottom: 20px;

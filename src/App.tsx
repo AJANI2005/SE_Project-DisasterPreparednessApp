@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const Sidebar = () => {
         <>
             <nav className="sidebar">
                 <div className="sidebar-logo">
-                    <span>App Name</span>
+                    <span className="sidebar-logo-text">SafetyNet</span>
                 </div>
 
                 <ul className="sidebar-list-group">
