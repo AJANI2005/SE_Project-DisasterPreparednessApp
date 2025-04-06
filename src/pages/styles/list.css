@@ -4,6 +4,12 @@
     font-size: 1rem;
 }
 
+.add-button:hover {
+    transition: all 0.3s ease;
+    background-color: #D9EBFD;
+    color: #333;
+}
+
 
 
 /* ================================================================= */
@@ -53,11 +59,23 @@
     margin-bottom: 30px;
 }
 
+.card-list-item:hover {
+    background-color: #000138;
+    color: white;
+    transition: all 0.3s ease;
+}
+
 
 .card-button {
     margin-top: 50px;
     width: 50%;
     text-align: center;
+}
+
+.card-button:hover {
+    transition: all 0.3s ease;
+    background-color: #D9EBFD;
+    color: #333;
 }
 
 
@@ -128,7 +146,12 @@ input[type="file"] {
     padding: 10px 12px 10px 12px;
     margin-right: auto;
     border-radius: 50px;
+}
 
+.back-button:hover {
+    transition: all 0.3s ease;
+    background-color: #014283;
+    color: #333;
 }
 
 

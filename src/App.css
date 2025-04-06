@@ -66,6 +66,7 @@ input:focus {
     width: auto;
     height: 30px;
     margin-right: 15px;
+    color: white;
     filter: invert(1) grayscale(100%);
 }
 
