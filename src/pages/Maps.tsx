@@ -16,7 +16,7 @@ interface Props {
     selectShelter: (shelter: any) => void
 }
 
-// GEOLOCATION
+
 const GetDirectionsButton = ({ shelter }: any) => {
     const [directionsUrl, setDirectionsUrl] = useState<string>('');
 
@@ -24,7 +24,7 @@ const GetDirectionsButton = ({ shelter }: any) => {
         if (!shelter) return;
 
         const getUserLocation = () => {
-            return new Promise<GeolocationCoordinates | null>((resolve) => {
+            return new Promise<GeolocationCoordinates | null>((resolve, reject) => {
                 if (!navigator.geolocation) {
                     console.error('Geolocation not supported');
                     return resolve(null);
@@ -34,7 +34,7 @@ const GetDirectionsButton = ({ shelter }: any) => {
                     (position) => resolve(position.coords),
                     (error) => {
                         console.error('Error getting location:', error);
-                        resolve(null);
+                        resolve(null); // Reject or resolve null in case of error
                     }
                 );
             });
@@ -44,9 +44,11 @@ const GetDirectionsButton = ({ shelter }: any) => {
             const location = await getUserLocation();
             if (location) {
                 const { latitude, longitude } = location;
-                const destination = `${shelter.name} ${shelter.parish}`;
-                const url = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${encodeURIComponent(destination)}`;
+                const destination = `${shelter.properties.name} ${shelter.properties.parish}`;
+                const url = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${destination}`;
                 setDirectionsUrl(url);
+            } else {
+                console.error('Unable to fetch user location');
             }
         };
 
