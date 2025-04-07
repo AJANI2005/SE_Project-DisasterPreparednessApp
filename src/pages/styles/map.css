@@ -1,3 +1,7 @@
+.map-marker {
+    opacity: 0.7;
+}
+
 .map-wrapper {
     display: flex;
     justify-content: center;

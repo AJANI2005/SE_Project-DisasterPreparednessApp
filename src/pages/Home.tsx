@@ -39,8 +39,8 @@ const Home = () => {
                         </ul>
                         <div className="progress-card-progress-container">
                             <div style={{ marginBottom: "10px" }}>
-                                <span className="progress-card-progress">{Math.round(checklist.progress * 100)}%</span>
-                                <span className="progress-card-progress-text">{checklist.progress != 1 && "Not completed" || "Completed"}</span>
+                                <span className="progress-card-progress">{checklist.progress}%</span>
+                                <span className="progress-card-progress-text">{checklist.progress != 100 && "Not completed" || "Completed"}</span>
                             </div>
                             <ProgressBar progress={checklist.progress} color={"blue"} />
                         </div>
@@ -51,4 +51,4 @@ const Home = () => {
 
     </>)
 };
-export default Home; 3
+export default Home; 

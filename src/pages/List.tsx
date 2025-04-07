@@ -266,11 +266,11 @@ export const ViewList = () => {
                 <h2>Checklists</h2>
                 <h3>Click to view each checklist</h3>
             </header>
-            <SearchBar />
+            <SearchBar showChecklists={true} />
             <div className="list-wrapper">
                 <div className="list-container">
                     <ListManager checklist={checklist} updateChecklist={(props) => {
-                        const newChecklist = { ...checklist, ...props };
+                        const newChecklist = Object.assign({}, checklist, props);
                         setChecklist(newChecklist);
                     }} />
                 </div>
@@ -288,7 +288,7 @@ export const ViewList = () => {
 
 interface ListManagerProps {
     checklist: Checklist;
-    updateChecklist: (props: { [key: string]: any }) => void;
+    updateChecklist: (props: any) => void;
 }
 export const ListManager = ({ checklist, updateChecklist }: ListManagerProps) => {
 
@@ -305,19 +305,20 @@ export const ListManager = ({ checklist, updateChecklist }: ListManagerProps) =>
         }
     }, []);
 
-    // Save any changes to items
-    useEffect(() => {
+    // Save any changes to items and progress
 
+    useEffect(() => {
         // Update progress 
         if (checklist.items.length > 0) {
             const completedItems = checklist.items.filter(item => item.completed).length;
-            const progress = completedItems / checklist.items.length;
-            updateChecklist({ progress });
+            const progress = Math.round((completedItems / checklist.items.length) * 100);
+            if (checklist.progress !== progress) {
+                updateChecklist({ ...checklist, progress });
+            }
         }
         // Save data to local storage
         saveChecklist(checklist);
-
-    }, [checklist.items]) // run when items state changes
+    }, [checklist]) // run checklist state changes
 
 
     const handleAddItemForm = (e: React.FormEvent) => {
@@ -356,7 +357,7 @@ export const ListManager = ({ checklist, updateChecklist }: ListManagerProps) =>
                             <h3 className="lm-title">{checklist.name}</h3>
                             <span className="lm-date">{checklist.dateCreated.toLocaleString()}</span>
                         </div>
-                        <span className="lm-progress-text">{checklist.progress * checklist.items.length} of {checklist.items.length}</span>
+                        <span className="lm-progress-text">{Math.round((checklist.progress / 100) * checklist.items.length)} of {checklist.items.length}</span>
                     </div>
                 </div>
 
@@ -371,7 +372,7 @@ export const ListManager = ({ checklist, updateChecklist }: ListManagerProps) =>
                                     checked={item.completed}
                                     onChange={(e) => {
                                         const newItems = checklist.items.map(i =>
-                                            i.id === item.id ? { ...i, completed: e.target.checked } : i
+                                            i.id === item.id ? Object.assign({}, i, { completed: e.target.checked }) : i
                                         );
                                         updateChecklist({ items: newItems });
                                     }}
@@ -420,9 +421,10 @@ const ListOverview = () => {
                         <div key={checklist.id} className="lm-container">
                             <ListManager checklist={checklist} updateChecklist={
                                 (props) => {
-                                    const newLists = checklists.map(c =>
-                                        c.id === checklist.id ? { ...c, ...props } : c
+                                    let newLists = checklists.map(c =>
+                                        c.id === checklist.id ? Object.assign({}, c, props) : c
                                     );
+                                    // update real time
                                     setChecklists(newLists);
                                 }} />
                         </div>
@@ -435,12 +437,14 @@ const ListOverview = () => {
 
 
 const List = () => {
+
+    // Attempt to load the checklists from local storage
     return (
         <>
             <h2>Checklists</h2>
             <h3>Click to view each checklist</h3>
 
-            <SearchBar />
+            <SearchBar showChecklists={true} />
             <Link to="/list/create">
                 <button className="add-button">Add New List</button>
             </Link>
