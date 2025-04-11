@@ -24,7 +24,7 @@ const GetDirectionsButton = ({ shelter }: any) => {
         if (!shelter) return;
 
         const getUserLocation = () => {
-            return new Promise<GeolocationCoordinates | null>((resolve, reject) => {
+            return new Promise<GeolocationCoordinates | null>((resolve) => {
                 if (!navigator.geolocation) {
                     console.error('Geolocation not supported');
                     return resolve(null);
@@ -109,7 +109,7 @@ const MapComponent = ({ initialShelter, selectShelter }: Props) => {
                     // Render shelters
                     shelters.map((shelter) => {
                         const p = shelter.properties;
-                        const { name, description, capacity, potable, nonpotable, id, parish } = p;
+                        const { name, description, capacity, id, parish } = p;
                         const g = shelter.geometry;
                         const coordinates = g.coordinates;
                         return (
